@@ -61,7 +61,7 @@ const Dasboard = () => {
                                     My Cart ( {cart.length})</NavLink>
 
                                 </li>
-                                <li><NavLink to='/dashboard/reservation'>
+                                <li><NavLink to='/dashboard/paymentHistory'>
                                     <TiCalendar className='text-2xl font-bold'></TiCalendar>
                                     Reservation</NavLink>
 

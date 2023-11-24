@@ -18,6 +18,7 @@ import AddItems from '../MainLayout/AddItems';
 import ManageAllIteam from '../ManageItem/ManageAllIteam';
 import UpdateItem from '../ManageItem/UpdateItem';
 import Payment from '../Payment/Payment';
+import PaymentHistory from '../PaymentHistory/PaymentHistory';
 const router = createBrowserRouter([
     {
       path: "/",
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         {
           path: 'payment',  
           element:<Payment></Payment>
+        },
+        {
+          path: 'paymentHistory',  
+          element:<PaymentHistory></PaymentHistory>
         },
         //admine section and route
         {
