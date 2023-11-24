@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import app from '../firebase/Firebase.config';
+import axios from 'axios';
+
 export const AuthContext=createContext(null)
  
 const auth = getAuth(app);
@@ -10,13 +12,20 @@ const AuthProvider = ({children}) => {
     const [user,setUser]=useState([])
 
     const [loading,setloading]=useState(true)
-     
 
+    
+
+    const provider = new GoogleAuthProvider();
     const updateUserProfile=(name,photo)=>{
        return updateProfile(auth.currentUser, {
             displayName:name, photoURL:photo
           })
     }
+
+    const googleSingIn=()=>{
+        return signInWithPopup(auth,provider)
+    }
+
     const userSingUp=(email,password)=>{
         setloading(true)
         return createUserWithEmailAndPassword(auth, email, password)
@@ -36,7 +45,21 @@ const AuthProvider = ({children}) => {
       const unSubscribe =onAuthStateChanged(auth,currentUser=>{
             setUser(currentUser)
 
-            console.log('current user',currentUser)
+            if(currentUser){
+                const usersInfo={
+                    email:currentUser.email
+                }
+
+                axios.post('http://localhost:5000/jwt',usersInfo)
+                .then(res=>{
+                    if(res.data.token){
+                        localStorage.setItem('access token',res.data.token)
+                    }
+                })
+            }else{
+                localStorage.removeItem('access token')
+            }
+        
             setloading(false)
         })
         return()=>{
@@ -49,7 +72,8 @@ const AuthProvider = ({children}) => {
         userSingUp,
         userSingIn,
         logOut,
-        updateUserProfile
+        updateUserProfile,
+        googleSingIn
     }
    
     return (

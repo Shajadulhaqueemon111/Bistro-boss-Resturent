@@ -4,11 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
+import useAxioxPublic from '../../Hookes/useAxioxPublic';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 const SingUp = () => {
 
     const {userSingUp,updateUserProfile}=useContext(AuthContext)
     const navigate=useNavigate()
+
+    const AxiosPublic=useAxioxPublic()
     const {
         register,
         handleSubmit,
@@ -23,26 +27,35 @@ const SingUp = () => {
                 console.log(res.user)
                 updateUserProfile(data.name,data.PhotoURL)
                 .then(()=>{
-                  console.log('update user info')
-                  reset()
-                  Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Register successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
+                 const userInfo={
+                  name: data.name,
+                  email:data.email,
+                  
+                 }
+                 AxiosPublic.post('/users',userInfo)
+            .then((res) => {
+              if (res.data.insertedId) {
+                reset();
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Register successfully',
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
 
-                navigate('/')
-                })
+                navigate('/');
+              }
             })
-    
-            .then(error=>{
-                console.log(error)
-            })
-     
-      
-      }
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+};
   
     return (
     <div>
@@ -101,7 +114,9 @@ const SingUp = () => {
               Already registered? Go to log in <Link className='text-red-500 font-bold' to='/login'>Login</Link>
               </p>
             </form>
+            <SocialLogin></SocialLogin>
           </div>
+       
         </div>
       </div>
   

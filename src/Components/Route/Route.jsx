@@ -11,6 +11,13 @@ import Login from '../page/Login';
 import SingUp from '../page/SingUp';
 import Dasboard from '../MainLayout/Dasboard';
 import Cart from '../pages/Cart/Cart';
+import AllUsers from '../MainLayout/AllUsers';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import AdmineRoute from '../AdmineRoute/AdmineRoute';
+import AddItems from '../MainLayout/AddItems';
+import ManageAllIteam from '../ManageItem/ManageAllIteam';
+import UpdateItem from '../ManageItem/UpdateItem';
+import Payment from '../Payment/Payment';
 const router = createBrowserRouter([
     {
       path: "/",
@@ -41,12 +48,37 @@ const router = createBrowserRouter([
     },
     {
       path: '/dashboard',
-      element:<Dasboard></Dasboard>,
+      element:<PrivateRoute><Dasboard></Dasboard></PrivateRoute>,
       children: [
         {
-          path: 'cart',  // Change from '/cart' to 'cart'
+          path: 'cart',  
           element: <Cart></Cart>
-        }
+        },
+        {
+          path: 'payment',  
+          element:<Payment></Payment>
+        },
+        //admine section and route
+        {
+          path: 'users',  
+          element:<AdmineRoute><AllUsers></AllUsers></AdmineRoute>
+        },
+
+        
+        {
+          path: 'addItems',  
+          element:<AdmineRoute><AddItems></AddItems></AdmineRoute>
+        },
+        {
+          path: 'manageItem',  
+          element:<AdmineRoute><ManageAllIteam></ManageAllIteam></AdmineRoute>
+        },
+        {
+          path: 'updateItem/:id',  
+          element:<AdmineRoute><UpdateItem></UpdateItem></AdmineRoute>,
+          loader:({params})=>fetch(`http://localhost:5000/menu/${params.id}`)
+
+        },
       ]
     }
     

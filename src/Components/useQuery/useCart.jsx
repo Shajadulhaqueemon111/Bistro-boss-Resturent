@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+
 import UseAxiosSecure from '../../Hookes/UseAxiosSecure';
 import { AuthContext } from '../Auth/AuthProvider';
+import { useContext } from 'react';
 // import UseAxiosSecure, { axiosSecure } from '../../Hookes/UseAxiosSecure';
 
 const useCart = () => {
@@ -14,7 +15,7 @@ const useCart = () => {
     queryFn: async()=>{
         const res=await axiosSecure.get(`/carts?email=${user.email}`)
 
-        return res.data;
+        return res?.data;
     }
   })
 
