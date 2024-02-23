@@ -50,7 +50,7 @@ const AuthProvider = ({children}) => {
                     email:currentUser.email
                 }
 
-                axios.post('http://localhost:5000/jwt',usersInfo)
+                axios.post('https://mistro-boss-server.vercel.app/jwt',usersInfo)
                 .then(res=>{
                     if(res.data.token){
                         localStorage.setItem('access token',res.data.token)

@@ -19,10 +19,12 @@ import ManageAllIteam from '../ManageItem/ManageAllIteam';
 import UpdateItem from '../ManageItem/UpdateItem';
 import Payment from '../Payment/Payment';
 import PaymentHistory from '../PaymentHistory/PaymentHistory';
+import ErrorPage from '../../ErrorPage/ErrorPage';
 const router = createBrowserRouter([
     {
       path: "/",
       element:<MainLayout></MainLayout>,
+      errorElement:<ErrorPage></ErrorPage>,
       children:[
         {
            path:'/',
@@ -81,7 +83,7 @@ const router = createBrowserRouter([
         {
           path: 'updateItem/:id',  
           element:<AdmineRoute><UpdateItem></UpdateItem></AdmineRoute>,
-          loader:({params})=>fetch(`http://localhost:5000/menu/${params.id}`)
+          loader:({params})=>fetch(`https://mistro-boss-server.vercel.app/menu/${params.id}`)
 
         },
       ]

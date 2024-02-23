@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Components/Auth/AuthProvider";
  const axiosSecure=axios.create({
-    baseURL:'http://localhost:5000'
+    baseURL:'https://mistro-boss-server.vercel.app'
 })
 const UseAxiosSecure = () => {
    const navigate = useNavigate();

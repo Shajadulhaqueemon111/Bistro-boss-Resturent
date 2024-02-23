@@ -50,7 +50,7 @@ const Dasboard = () => {
 
                         </>
                             : <>
-                                <li><NavLink to='/dashboard/userHome'>
+                                <li><NavLink to='/'>
                                     <TiHome className='text-2xl font-bold'></TiHome>
                                     User Home</NavLink>
 
@@ -66,16 +66,7 @@ const Dasboard = () => {
                                     Reservation</NavLink>
 
                                 </li>
-                                <li><NavLink to='/dashboard/review'>
-                                    <TiUserAdd className='text-2xl font-bold'></TiUserAdd>
-                                    Add Review</NavLink>
-
-                                </li>
-                                <li><NavLink to='/dashboard/booking'>
-                                    <TiBookmark className='text-2xl  font-bold'></TiBookmark>
-                                    My Booking</NavLink>
-
-                                </li>
+                            
 
                             </>
                     }
